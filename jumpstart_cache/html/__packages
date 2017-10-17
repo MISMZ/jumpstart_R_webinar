@@ -1,0 +1,16 @@
+base
+dplyr
+lattice
+ggplot2
+ggformula
+mosaicData
+Matrix
+mosaic
+readr
+data.table
+knitr
+bindrcpp
+broom
+caret
+foreach
+glmnet

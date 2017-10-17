@@ -1,0 +1,810 @@
+---
+title: "A Jump-Start into R for Statistical Programmers and Analysts"
+author: "Kelly McConville"
+date: "10/18/2017"
+output:
+  ioslides_presentation:
+    widescreen: yes
+    logo: swat.png
+editor_options: 
+  chunk_output_type: console
+---
+
+
+
+<style>
+.gdbar img {
+  width: 200px !important;
+  height: 100px !important;
+}
+
+.gdbar {
+  width: 250px !important;
+  height: 120px !important;
+}
+
+slides > slide:not(.nobackground):before {
+  width: 0px;
+  height: 0px;
+  background-size: 0px 0px;
+}
+
+ul {
+  color: black;
+}
+
+body {
+  color: black;
+}  
+
+h2 { 
+ color: #8A211D;		
+}
+
+a {
+    color: #CF872E;
+    text-decoration: none;
+    border-bottom: none;
+
+}
+
+a:hover {
+  color: #8A211D !important;
+}
+
+pre {
+  font-family: 'Source Code Pro', 'Courier New', monospace;
+  font-size: 18px;
+  line-height: 28px;
+  padding: 10px 0 10px 60px;
+  letter-spacing: -1px;
+  margin-bottom: 20px;
+  width: 106%;
+  left: -60px;
+  position: relative;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  /*overflow: hidden;*/
+}
+
+</style>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, message = FALSE, warning = FALSE, tidy = TRUE, tidy.opts=list(width.cutoff=70))
+
+options(digits=2, scipen = 3)
+```
+
+## (Optional) Pre-Webinar Downloads
+
+* If you want to run the commands as I present them, you will need to download R and then RStudio.  (Both are free.)
+
+* R: Available at the [CRAN site](https://cran.r-project.org/)
+
+* RStudio: Available at [their website](https://www.rstudio.com/products/rstudio/download/#download)
+
+* You will also need to install some packages.  Here is the code to do so.  Run this code in the console.
+    + Note: We will discuss package installation during the talk.  
+
+```{r, eval=FALSE}
+install.packages(c("dplyr", "ggplot2","data.table", "mosaic", "broom", "caret", "readr", "knitr"))
+```
+
+
+
+## Components of the Jump-Start
+
+* Introduction to R
+
+* Introduction the RStudio IDE
+
+
+* Whirlwind tour of data analysis in R
+    + Discuss a reproducible workflow.
+    + Highlight some of the popular functions and packages.
+    
+* Along the way, you will receive loads of links and resources for taking the jump-start to the next level.
+    
+##What is not part of the Jump-Start
+  
+* Why R is better than package X.
+    + Will briefly discuss strengths of R.
+        + Want to spend our time learning R rather than talking about why you should learn R!
+    + If you are interested in joining the debate, there are plenty of forums and blog posts you can visit.
+        + [Like this one.](https://datacamp.wpengine.com/wp-content/uploads/2014/05/infograph.png)
+        + [And this one.](http://www.theanalyticslab.nl/2017/03/18/python-r-vs-spss-sas/)
+        + [Here's another one.](http://r4stats.com/articles/popularity/)
+        + [One on weaknesses of R.](http://r4stats.com/articles/why-r-is-hard-to-learn/)
+
+* Deep conversation about memory, speed, specific configurations, big data, integration with Spark...
+
+
+## My Background
+
+* R user for 12 years
+
+
+* How do I use R in my research?
+    + Data wrangling
+    + Graphing
+    + Summarizing
+    + Simulations
+    + Analyzing
+        + Currently writing an R package of model-assisted survey estimators.
+    + Writing    
+
+## My Background
+
+* Teacher of R for 6 years
+
+* How do I use R in my teaching?
+    + To teach the whole data analysis workflow
+    + To build intuition about concepts
+
+## Assumptions about the Audience
+
+* A programmer or analyst who is familiar with a different statistical program.
+* Have little to no experience with R.
+* Have decided it is worthwhile to learn about R.
+    + Possibly on the fence as to whether or not to switch to R.
+    
+## Strengths of R
+
+* Free and open source
+
+* Platform independent
+
+* Fosters a reproducible workflow
+
+* Active community of users and programmers making R better
+
+## Coupling R with RStudio
+
+* RStudio is an integrated development environment (IDE) for the R statistical language.
+
+* The common analogy:
+
+![](Dashboard_1.png)
+
+## Coupling R with RStudio
+
+* RStudio is an integrated development environment (IDE) for the R statistical language.
+
+* The common analogy:
+
+![](Dashboard_2.png)
+
+## Coupling R with RStudio
+
+
+* Let's acquaint ourselves with the different components of RStudio.
+
+## Highlights of RStudio
+
+* Lower Right:
+    + Files, Plots, Packages, Help
+
+* Upper Right: 
+    + Environment, History
+
+* Lower Left: Console
+
+* Upper Left: Text editor
+
+* Nice Features:
+    + Importing Data
+    + Tab completion
+    + Integration with [github](https://github.com/)
+        + [Fabulous guide](http://happygitwithr.com/)
+
+
+
+## Getting Help
+
+* If you know the function's exact name:
+```{r, eval=FALSE, tidy = FALSE}
+?lm
+```
+* If you know specific keywords:
+```{r, eval=FALSE}
+help.search('linear model')
+```
+
+* If you have an idea but not the specific word/function, I recommend trying Google or Stack Overflow.
+
+## Resources
+
+* [R FAQ](https://cran.r-project.org/doc/FAQ/R-FAQ.html) 
+
+* [DataCamp](https://www.datacamp.com/)
+
+* RStudio:
+    + [CheatSheets](https://www.rstudio.com/resources/cheatsheets/)
+    + [Online Learning](https://www.rstudio.com/online-learning/)
+    + [Webinars](https://www.rstudio.com/resources/webinars/)
+
+* Join a local user group:
+    + [R user groups](https://jumpingrivers.github.io/meetingsR/r-user-groups.html)
+    + [R Ladies](https://rladies.org/)
+    
+
+## Base R versus the [Tidyverse](https://www.tidyverse.org/)
+
+* **Question**: Should I use a built-in function or a function that exists in a package?
+
+* How do you use a function from an R package?
+    + First install the package:
+
+```{r, eval=FALSE}
+#Only do once
+install.packages("mosaic")
+```
+
+* Then load the package every time you want to use its functions:
+
+```{r}
+library(mosaic)
+favstats(1:10)
+```
+
+
+
+## R Objects: [Data Types](http://www.statmethods.net/input/datatypes.html)
+
+
+* The common data objects in R are:
+    + Vectors: one dimensional array 
+        + Types: numeric, integer, character, factor, logical
+    + Matrices: two dimensional array
+        + Each column must have the same type
+    + **Data Frames**: two dimensional array
+        + Columns may have different types
+    + Lists
+        + Items don't need to be the same size.
+
+
+## Read in the data
+
+* Option 1: Use the "Import Dataset" button
+
+* Option 2: Console
+
+```{r}
+#Base R
+eruptions <- read.csv("GVP_Eruption_Results.csv")
+
+#Tidyverse
+library(readr)
+eruptions <- read_csv("GVP_Eruption_Results.csv")
+
+#data.table
+library(data.table)
+eruptions <- fread("GVP_Eruption_Results.csv")
+```
+
+* <- is the "assignment operator".
+
+* The *eruptions* dataset is all documented eruptions and is from the [Smithsonian Institution Global Volcanism Program.](http://volcano.si.edu/)
+
+## Read in the data
+
+* You can read in many different file formats into R!
+    + Excel
+    + Text file
+    + SPSS
+    + SAS
+    + STATA
+    + ...
+
+
+
+## Read in the data
+
+* Main differences between base, *readr*, and *data.table*:
+    + All read a flat file into a data frame.
+        + *readr* reads in as a [tibble](https://cran.r-project.org/web/packages/tibble/vignettes/tibble.html).
+        + *data.table* reads in as a [data.table](https://www.rdocumentation.org/packages/data.table/versions/1.10.4/topics/data.table-package).
+    + readr and data.table don't automatically convert characters to factors.
+        + [Why?](https://simplystatistics.org/2015/07/24/stringsasfactors-an-unauthorized-biography/)
+    + Speed: base > readr > data.table
+
+
+  
+```{r, echo=FALSE}
+read1 <- system.time(eruptions <- read.csv("GVP_Eruption_Results.csv")
+)
+read2 <- system.time(eruptions <- read_csv("GVP_Eruption_Results.csv")
+)
+read3 <- system.time(eruptions <- fread("GVP_Eruption_Results.csv")
+)
+library(knitr)
+kable(data.frame(read.csv=read1[3], read_csv=read2[3], fread=read3[3]), format = "markdown", padding = 1)
+```
+
+##Data Exploration
+
+
+```{r}
+#Class
+class(eruptions)
+
+#Convert to a data frame
+eruptions <- data.frame(eruptions)
+
+```
+
+```{r, eval=FALSE}
+View(eruptions)
+```
+
+##Data Exploration
+
+```{r}
+#Look at a few observations
+head(eruptions)
+```
+
+##Data Exploration
+
+```{r}
+names(eruptions)
+dim(eruptions)
+```
+
+
+##Data Exploration
+
+```{r}
+str(eruptions)
+```
+
+
+## Data Wrangling: Some base R functions
+
+```{r}
+#Subsetting: Select rows
+eruptions[1,]
+```
+
+## Data Wrangling: Some base R functions
+
+```{r}
+#Subsetting: Select columns
+eruptions[,2]
+```
+
+
+```{r, eval=FALSE}
+#0ther ways of selecting a column
+eruptions$Volcano_Name
+eruptions[,"Volcano_Name"]
+```
+
+## Data Wrangling: Some base R functions
+
+
+```{r}
+#More subsetting examples
+eruptions[1,2]
+eruptions[-(2:11097),2]
+eruptions[200:202, c(2,9)]
+```
+
+## Data Wrangling: Some base R functions
+
+```{r}
+#Subset: select columns
+eruptions2 <- eruptions[,c("Eruption_Category", "VEI", "Start_Year", "End_Year") ]
+
+#Subset: select rows
+eruptions3 <- subset(eruptions2, Eruption_Category == "Confirmed Eruption" & Start_Year > 1900)
+
+#Add column which is a function of existing columns
+eruptions3$Length <- eruptions3$End_Year - eruptions3$Start_Year
+
+
+```
+
+
+## Data Wrangling: Some base R functions
+
+```{r}
+#Arrange by Length
+head(eruptions3[order(eruptions3$Length, decreasing = TRUE),], 10)
+```
+
+## Data Wrangling: Some base R functions
+
+```{r}
+#Perform operation by specified grouping
+length(eruptions3$Eruption_Category)
+eruptions4 <- aggregate(Eruption_Category~Start_Year, data = eruptions3, FUN=length)
+eruptions4
+```
+
+
+## Data Wrangling: Tidyverse with [dplyr](http://dplyr.tidyverse.org/)
+
+```{r}
+library(dplyr)
+
+#Subset: select columns
+eruptions2 <- select(eruptions, Eruption_Category, VEI, Start_Year, End_Year)
+
+#Subset: select rows
+eruptions3 <- filter(eruptions2, Eruption_Category == "Confirmed Eruption", Start_Year > 1900)
+
+#Add column which is a function of existing columns
+eruptions4 <- mutate(eruptions3, Length = End_Year - Start_Year)
+```
+
+## Data Wrangling: Tidyverse with [dplyr](http://dplyr.tidyverse.org/)
+
+```{r}
+#Arrange by Length
+head(arrange(eruptions4, desc(Length)), 10)
+```
+
+## Data Wrangling: Tidyverse with [dplyr](http://dplyr.tidyverse.org/)
+
+```{r}
+#Aggregate by values of a variable
+eruptions5 <- group_by(eruptions4, Start_Year)
+
+#Perform operation by specified grouping
+eruptions6 <- summarize(eruptions5,count=n(), avg_VEI=mean(VEI, na.rm=TRUE), maxLength = max(Length, na.rm=TRUE))
+eruptions6
+
+```
+
+
+
+## Data Wrangling: Tidyverse with dplyr and [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+
+* %>% called a pipe.
+    + Interpret as "and then"
+
+
+```{r, tidy = FALSE}
+library(dplyr) #Automatically loads magrittr
+
+yearly <- eruptions %>%
+    select(Eruption_Category, VEI, Start_Year, End_Year) %>%
+    filter(Eruption_Category=="Confirmed Eruption", Start_Year>=1900) %>%
+    mutate(Length = End_Year - Start_Year) %>%
+    group_by(Start_Year) %>%
+    summarize(count=n(), avg_VEI=mean(VEI, na.rm=TRUE), maxLength = max(Length, na.rm=TRUE))
+```
+
+## Data Wrangling: Tidyverse with dplyr and [magrittr](https://cran.r-project.org/web/packages/magrittr/vignettes/magrittr.html)
+
+```{r}
+yearly
+```
+
+
+
+## Data Wrangling: [data.table](https://cran.r-project.org/web/packages/data.table/vignettes/datatable-intro.html)
+
+* Very flexible and fast.
+    + If you are dealing with bigger datasets, it may be the best option for your data wrangling needs.
+    + It is beyond the scope of today's webinar.
+    + [Here's a cheat sheet.](https://datacamp-community.s3.amazonaws.com/6fdf799f-76ba-45b1-b8d8-39c4d4211c31)
+
+
+## Data Visualization: Base R
+
+```{r}
+plot(x = yearly$Start_Year, y = yearly$count, xlab = "Start Year", ylab = "Number of Eruptions")
+```
+
+
+## Data Visualization: Base R
+
+```{r}
+hist(x = yearly$count, main = "Yearly Counts", freq = FALSE, xlab = "Yearly Number of Eruptions")
+```
+
+
+## Data Visualization: Tidyverse with [ggplot2](http://ggplot2.tidyverse.org/reference/)
+
+* Based on the [*Grammar of Graphics*](https://www.amazon.com/Grammar-Graphics-Statistics-Computing/dp/0387245448)
+
+* Big idea: Map **data** to the **aes**thetic attributes (e.g. location, size, shape, color) of **geom**etric objects (e.g. points, lines, bars).
+
+```{r, eval=FALSE}
+#base plot with data and aesthetics defined
+#added geometric layers
+#layers for labels, faceting, and other formatting
+ggplot(data = DATA, aes(MAPPING)) + 
+  geom_OBJECT() + 
+  scale_*_*() + #Optional
+  labs() #Optional
+```
+
+## Data Visualization: Tidyverse with [ggplot2](http://ggplot2.tidyverse.org/reference/)
+
+```{r, fig.height = 3.5}
+library(ggplot2)
+ggplot(data = yearly, aes(x=Start_Year, y=count)) +
+  geom_point()  + 
+  labs(x="Starting Year", y="Number of Eruptions")
+```
+
+## Data Visualization: Tidyverse with [ggplot2](http://ggplot2.tidyverse.org/reference/)
+
+```{r, fig.height = 3.5}
+ggplot(data = yearly, aes(x=Start_Year, y=count, size = avg_VEI)) +
+  geom_point()  + 
+  labs(x="Starting Year", y="Number of Eruptions", size = "Average Size")
+```
+
+## Data Visualization: Tidyverse with [ggplot2](http://ggplot2.tidyverse.org/reference/)
+
+```{r}
+ggplot(data = yearly, aes(x=count)) +
+  geom_histogram()  + 
+  labs(x="Number of Eruptions")
+```
+
+## Data Visualization
+
+* Both [base graphics](http://publish.illinois.edu/johnrgallagher/files/2015/10/BaseGraphicsCheatsheet.pdf) and [ggplot2](https://github.com/rstudio/cheatsheets/raw/master/data-visualization-2.1.pdf) have LOTS of features not discussed here.
+
+* In the Tidyverse versus base R debate, graphing is a very popular point of contention.
+    * [Pro base R argument](https://simplystatistics.org/2016/02/11/why-i-dont-use-ggplot2/)
+    * [Pro ggplot2 argument](http://varianceexplained.org/r/teach_ggplot2_to_beginners/)
+    * [Comparison of the two](https://flowingdata.com/2016/03/22/comparing-ggplot2-and-r-base-graphics/)
+
+## Modeling
+
+* R has a vast array of available modeling techniques.
+
+
+```{r, tidy = FALSE}
+#Wrangle data
+eruptions <- eruptions %>%
+  filter(Start_Year>=2000) %>%
+  mutate(Length = End_Year - Start_Year) %>%
+  select(Eruption_Category, VEI, Length, Latitude, Longitude, Start_Year) %>%
+  na.omit
+```
+
+* Disclaimer: With the missing values, censoring, and sampling biases, we should do more wrangling than this before conducting inference.
+ 
+
+
+## Modeling
+
+* Example: Linear Regression
+
+
+```{r}
+mod_lm <- lm(formula = Length~Start_Year + VEI*Eruption_Category, data = eruptions)
+```
+
+
+
+## Modeling {.smaller}
+
+
+
+
+```{r}
+summary(mod_lm)
+```
+
+## Modeling {.smaller}
+
+
+```{r, echo = FALSE}
+summary(mod_lm)
+```
+
+
+
+
+## Modeling
+
+
+```{r}
+#Tidy output
+library(broom)
+tidy(mod_lm)
+```
+
+## Modeling
+
+```{r}
+#Tidy output
+glance(mod_lm)
+```
+
+## Modeling
+
+
+```{r}
+class(tidy(mod_lm))
+class(summary(mod_lm))
+```
+
+* From help file of *summary()*:
+
+> "summary is a generic function used to produce result summaries of the results of various model fitting functions. The function invokes particular methods which depend on the class of the first argument."
+
+## Modeling
+
+* Example: Generalized Linear Models
+
+```{r}
+mod_glm <- glm(formula = as.factor(Eruption_Category)~Start_Year + poly(x = VEI, degree = 2), family = "binomial", data = eruptions)
+```
+
+
+## Modeling
+
+* Example: Generalized Linear Models
+
+```{r}
+tidy(mod_glm)
+```
+
+## Modeling
+
+* Example: ANOVA Models
+
+```{r}
+mod_aov <- aov(Length~Eruption_Category, data = eruptions)
+tidy(mod_aov)
+```
+
+
+## Predictive Modeling with [caret](https://topepo.github.io/caret/index.html)
+
+* Classification and Regression Training 
+    * Data splitting (train/test datasets)
+    * Modeling
+    * Tuning parameters
+    * Variable Importance
+    
+* Key idea: Common structure for building and comparing predictive models.
+    + Allows for easy comparisons across different types of models.
+    
+* Showcased in [*Applied Predictive Modeling*](http://appliedpredictivemodeling.com/) by Max Kuhn and Kjell Johnson.    
+
+    
+## Predictive Modeling with [caret](https://topepo.github.io/caret/index.html)
+
+* Example: [Elastic-Net Regression](https://web.stanford.edu/~hastie/glmnet/glmnet_alpha.html)
+
+* Model:
+
+$$
+\begin{aligned}
+y_i &= \beta_o + \beta_1 x_{i1} + \beta_2 x_{i2} + \ldots + \beta_p x_{ip} + \epsilon_i \\
+&=\boldsymbol{x}_i^T \boldsymbol{\beta} + \epsilon_i \nonumber
+\end{aligned}
+$$
+
+
+* Criteria for Coefficients:
+    
+$$
+\boldsymbol{\widehat{\beta}} = \underset{\boldsymbol{\beta}}{\arg\min}  \left\{ \sum_{i \in s} (y_i - \boldsymbol{x}_i^T \boldsymbol{\beta})^2 + \lambda \left[ \alpha \sum_{j=1}^p \left|\beta_j\right| + (1-\alpha) \sum_{j=1}^p \beta_j^2\right] \right\}
+$$    
+
+## Predictive Modeling with [caret](https://topepo.github.io/caret/index.html)
+
+
+```{r, cache = TRUE}
+library(caret)
+#Set-up grid of possible lambda and alpha values
+lam <- 10^seq(1,-2, length.out = 50)
+alpha <- 0:10/10
+grd <- expand.grid(lambda = lam, alpha = alpha)
+
+#Set-up CV options
+cv_opts <- trainControl(method = "CV", number = 10)
+
+#Train the model for each grid point
+cvfits <- train(Length~., data = eruptions, method = "glmnet", tuneGrid = grd, trControl = cv_opts, standardize = TRUE)
+```
+
+
+## Predictive Modeling with [caret](https://topepo.github.io/caret/index.html)
+
+```{r, cache = TRUE}
+plot(cvfits)
+
+#Optimal parameters
+cvfits$bestTune
+```
+
+## Predictive Modeling with [caret](https://topepo.github.io/caret/index.html)
+
+```{r, cache = TRUE}
+#Non-zero coefficients
+bestfit <- cvfits$finalModel
+coef(bestfit, s = cvfits$bestTune$lambda)
+```
+
+## Report Generation via R Markdown
+
+* Documents that weave together narrative and R code/output.
+
+* Can create [reports](http://rmarkdown.rstudio.com/), [presentations](http://rmarkdown.rstudio.com/ioslides_presentation_format.html), [journal articles](https://github.com/rstudio/rticles), and even [books](https://bookdown.org/).
+    + This presentation was made with R Markdown.
+
+* Output formats: HTML, pdf, Word.
+
+* Let's see how to start a new R Markdown document.
+
+## Topics We Didn't Get to Today
+
+
+* [*for* loops, *while* loops](https://www.datacamp.com/community/tutorials/tutorial-on-loops-in-r), [*ifelse*](https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/ifelse)
+
+* The family of [*apply* functions](https://www.datacamp.com/community/tutorials/r-tutorial-apply-family)
+
+* Many of the basic functions: 
+
+```{r}
+sd(eruptions$VEI)
+table(eruptions$Eruption_Category)
+```
+
+## Topics We Didn't Get to Today
+ 
+* Hypothesis tests: *t.test*
+
+```{r}
+t.test(VEI~Eruption_Category, data = eruptions)
+```
+
+
+## Topics We Didn't Get to Today
+
+* Generating random observations: 
+
+```{r}
+rnorm(n = 3, mean = 5, sd = 1)
+runif(n = 6, min = 0, max = 1)
+```
+
+* Merging files
+    + Base r [*merge*](https://www.rdocumentation.org/packages/base/versions/3.4.1/topics/merge)
+    + dplyr [*joins*](https://cran.r-project.org/web/packages/dplyr/vignettes/two-table.html)
+
+* Writing [functions](http://adv-r.had.co.nz/Functions.html) and [R packages](http://r-pkgs.had.co.nz/)
+
+
+
+
+## Resources
+
+* [R FAQ](https://cran.r-project.org/doc/FAQ/R-FAQ.html) 
+
+* [DataCamp](https://www.datacamp.com/)
+
+* RStudio:
+    + [CheatSheets](https://www.rstudio.com/resources/cheatsheets/)
+    + [Online Learning](https://www.rstudio.com/online-learning/)
+    + [Webinars](https://www.rstudio.com/resources/webinars/)
+
+* Join a local user group:
+    + [R user groups](https://jumpingrivers.github.io/meetingsR/r-user-groups.html)
+    + [R Ladies](https://rladies.org/)
+
+
+
+
+## Announcement and Questions
+
+* If you want to learn more about building statistical/machine learning models in R, consider attending my short course, [*Statistical Learning Methods in R*](http://ww2.amstat.org/meetings/csp/2018/onlineprogram/index.cfm?SessionTypeID=147), on February 15, 2018 at the [Conference on the Statistical Practice](http://ww2.amstat.org/meetings/csp/2018/) in [Portland, OR](http://www.washingtonpost.com/sf/style/2015/06/30/the-search-for-americas-best-food-cities-portland-ore/).
+
+* Let's *put on the breaks* and take time for questions.
+    + If you have a question, type it into the Question Box.
+
+
+

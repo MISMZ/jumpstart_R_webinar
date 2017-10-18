@@ -78,7 +78,7 @@ options(digits=2, scipen = 3)
 
 ## (Optional) Pre-Webinar Downloads
 
-* If you want to run the commands as I present them, you will need to download R and then RStudio.  (Both are free.)
+* If you want to run the commands as I present them, you will need to download R and then RStudio (Both are free.).
 
 * R: Available at the [CRAN site](https://cran.r-project.org/)
 
@@ -91,7 +91,7 @@ options(digits=2, scipen = 3)
 install.packages(c("dplyr", "ggplot2","data.table", "mosaic", "broom", "caret", "readr", "knitr"))
 ```
 
-
+* [Materials are on github](https://github.com/mcconvil/jumpstart_R_webinar).
 
 ## Components of the Jump-Start
 
@@ -307,7 +307,7 @@ eruptions <- fread("GVP_Eruption_Results.csv")
         + *data.table* reads in as a [data.table](https://www.rdocumentation.org/packages/data.table/versions/1.10.4/topics/data.table-package).
     + readr and data.table don't automatically convert characters to factors.
         + [Why?](https://simplystatistics.org/2015/07/24/stringsasfactors-an-unauthorized-biography/)
-    + Speed: base > readr > data.table
+    + Time: base > readr > data.table
 
 
   
